@@ -20,6 +20,9 @@
   "dependencies": {
     "dotenv": "^14.2.0",
     "koa": "^2.13.4",
+    "reflect-metadata": "^0.1.13",
+    "sql.js": "^1.6.2",
+    "typeorm": "^0.2.41",
     "winston": "^3.4.0"
   }
 }
