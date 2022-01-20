@@ -7,13 +7,14 @@ import bodyParser from "koa-bodyparser";
 import { routerErrorHandler } from "./utils/routerErrorHandler";
 import { createConnection } from "typeorm";
 
+export const app = new Koa();
+
 function handleApplicationError(error: Error) {
   logger.error(`Server error: `, error);
 }
 
 async function main() {
   const { SERVER_PORT } = process.env;
-  const app = new Koa();
   logger.info("Starting server...");
 
   // Register error handlers

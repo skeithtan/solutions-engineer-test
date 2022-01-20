@@ -73,6 +73,6 @@ couriersRouter.get("/lookup", async (ctx) => {
   const capacityRequired = ctx.query.capacity_required ?? 0;
   const couriers = await Courier.find({ where: { maxCapacity: MoreThanOrEqual(capacityRequired) } });
   ctx.status = StatusCodes.OK;
-  ctx.body = couriers;
+  ctx.body = couriers.map((it) => CourierMapper.toDTO(it));
 });
 // endregion
