@@ -1,21 +1,38 @@
 // NOTE: Load environmental variables -- must come first
 import "dotenv/config";
 import { logger } from "./utils/logger";
+import * as routers from "./routers";
 import Koa from "koa";
+import bodyParser from "koa-bodyparser";
+import { routerErrorHandler } from "./utils/routerErrorHandler";
+import { createConnection } from "typeorm";
 
 function handleApplicationError(error: Error) {
   logger.error(`Server error: `, error);
 }
 
-function main() {
+async function main() {
   const { SERVER_PORT } = process.env;
+  const app = new Koa();
   logger.info("Starting server...");
 
-  const app = new Koa();
-  app.listen(SERVER_PORT);
+  // Register error handlers
   app.on("error", handleApplicationError);
+  app.use(routerErrorHandler);
+
+  // Register body parser
+  app.use(bodyParser());
+
+  // Register routers to app
+  Object.values(routers).forEach((router) => {
+    app.use(router.routes());
+    app.use(router.allowedMethods());
+  });
+
+  await createConnection();
+  app.listen(SERVER_PORT);
 
   logger.info(`Server is listening on port ${SERVER_PORT}`);
 }
 
-main();
+main().then();

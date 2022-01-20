@@ -1,6 +1,6 @@
-import winston from "winston";
+import winston, { Logger } from "winston";
 
-function initializeLogger() {
+function initializeLogger(): Logger {
   const {
     NODE_ENV,
     LOGGER_LEVEL,

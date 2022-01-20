@@ -1,12 +1,10 @@
-import { Entity } from "typeorm";
+import { BaseEntity, Column, Entity, PrimaryColumn } from "typeorm";
 
 @Entity()
-export class Courier {
+export class Courier extends BaseEntity {
+  @PrimaryColumn()
   id: number;
-  maxCapacity: number;
 
-  constructor(id: number, maxCapacity: number) {
-    this.id = id;
-    this.maxCapacity = maxCapacity;
-  }
+  @Column()
+  maxCapacity: number;
 }
